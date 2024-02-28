@@ -115,14 +115,25 @@ function App() {
 
   return (
     <>
-      <div className=' flex flex-col gap-5 justify-center items-center bg-zinc-900 w-full h-screen'>
-        <div className='py-4 flex gap-4 justify-center items-center  w-[100%]  flex-wrap text-sm font-medium'>
+      <div className='flex flex-col gap-5 justify-center items-center bg-zinc-900 w-full h-screen'>
+        <div className='flex gap-4 justify-center items-center  w-[100%]  flex-wrap text-sm font-medium'>
           <Tooltip title="Download signature" TransitionProps={{ timeout: 500 }}>
             <button onClick={handleDownload}><HiDownload className='bg-zinc-200/50 p-1 h-8 w-8 rounded-full'/></button>
           </Tooltip>
           <Tooltip title="New Signature">
             <button onClick={handleReload}><TbReload className='bg-zinc-200/50 p-1 h-8 w-8 rounded-full'/></button>
           </Tooltip>
+          <div className='flex bg-zinc-200/50 rounded-full'>
+            <Tooltip title="Change canvas color">
+              <button>
+                <MdColorLens  className='p-1 h-8 w-8 rounded-full'/>
+              </button>
+            </Tooltip>
+            <select value={backgroundColor} onChange={handleBackgroundColorChange} className='bg-zinc-200/30 p-1 rounded-full'>
+              <option value={'transparent'}>Transparent</option>
+              <option value={'white'}>White</option>
+            </select>
+          </div>
           <div className='flex bg-zinc-200/50 rounded-full'>
             <Tooltip title="Change brush size">
               <button>
@@ -150,25 +161,14 @@ function App() {
               <option value={'blue'}>Blue</option>
             </select>
           </div>
-          <div className='flex bg-zinc-200/50 rounded-full'>
-            <Tooltip title="Change canvas color">
-              <button>
-                <MdColorLens  className='p-1 h-8 w-8 rounded-full'/>
-              </button>
-            </Tooltip>
-            <select value={backgroundColor} onChange={handleBackgroundColorChange} className='bg-zinc-200/30 p-1 rounded-full'>
-              <option value={'transparent'}>Transparent</option>
-              <option value={'white'}>White</option>
-            </select>
-          </div>
           <div className="flex bg-zinc-200/50 rounded-full">
             <Tooltip title="Change image size">
               <button>
                 <TbResize className=' p-1 h-8 w-8 rounded-full' />
               </button>
             </Tooltip>
-              <input type="number" value={width} onChange={(e) => setWidth(parseInt(e.target.value))} className="bg-zinc-200/50 p-1 rounded-s-full w-28  placeholder:text-zinc-900 placeholder:px-1" placeholder="Width (cm)" />
-              <input type="number" value={height} onChange={(e) => setHeight(parseInt(e.target.value))} className="bg-zinc-200/50 p-1 rounded-e-full w-28 placeholder:text-zinc-900 placeholder:px-1" placeholder="Height (cm)" />
+              <input type="number" value={width} onChange={(e) => setWidth(parseInt(e.target.value))} className="bg-zinc-200/50 p-1 rounded-s-full w-[85px]  placeholder:text-zinc-900 placeholder:px-1" placeholder="Width (cm)" />
+              <input type="number" value={height} onChange={(e) => setHeight(parseInt(e.target.value))} className="bg-zinc-200/50 p-1 rounded-e-full w-[90px] placeholder:text-zinc-900 placeholder:px-1" placeholder="Height (cm)" />
           </div>
           <div className='flex bg-zinc-200/50 rounded-full'>
             <Tooltip title="Change image format">
@@ -198,7 +198,7 @@ function App() {
             style={{ width: '100%', height: '100%' }}
           />
         </div>
-        <div className=' bottom-2 text-zinc-400'>
+        <div className=' text-zinc-400'>
           &#169; Balaji Upadhyay {currentYear}
         </div>
       </div>
