@@ -115,8 +115,8 @@ function App() {
 
   return (
     <>
-      <div className='relative flex flex-col gap-5 justify-center items-center bg-zinc-900 w-full h-screen'>
-        <div className=' flex gap-4 justify-center items-center  w-[100%]  flex-wrap text-sm font-medium'>
+      <div className=' flex flex-col gap-5 justify-center items-center bg-zinc-900 w-full h-screen'>
+        <div className='py-4 flex gap-4 justify-center items-center  w-[100%]  flex-wrap text-sm font-medium'>
           <Tooltip title="Download signature" TransitionProps={{ timeout: 500 }}>
             <button onClick={handleDownload}><HiDownload className='bg-zinc-200/50 p-1 h-8 w-8 rounded-full'/></button>
           </Tooltip>
@@ -184,7 +184,7 @@ function App() {
           </div>
         </div>
         <div
-          className='relati  flex bg-zinc-800 w-[60%] h-[70%] rounded-2xl overflow-hidden'
+          className='flex bg-zinc-800 w-[60%] h-[70%] rounded-2xl overflow-hidden'
           ref={canvasContainerRef}
           onMouseDown={startDrawing}
           onMouseMove={draw}
@@ -198,7 +198,7 @@ function App() {
             style={{ width: '100%', height: '100%' }}
           />
         </div>
-        <div className='absolute bottom-2 text-zinc-400'>
+        <div className=' bottom-2 text-zinc-400'>
           &#169; Balaji Upadhyay {currentYear}
         </div>
       </div>
