@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { HiDownload } from "react-icons/hi";
+import { TbReload } from "react-icons/tb";
 import { FaSignature } from "react-icons/fa";
 import { MdColorLens } from "react-icons/md";
 import { PiPaintBrushHouseholdFill } from "react-icons/pi";
@@ -87,6 +88,10 @@ function App() {
     setBrushColor(event.target.value);
   };
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   const handleBrushSizeChange = (event) => {
     const newSize = parseInt(event.target.value);
     setBrushSize(newSize);
@@ -114,6 +119,9 @@ function App() {
         <div className='flex gap-4 justify-center items-center  w-[100%]  flex-wrap text-sm font-medium'>
           <Tooltip title="Download signature" TransitionProps={{ timeout: 500 }}>
             <button onClick={handleDownload}><HiDownload className='bg-zinc-200/50 p-1 h-8 w-8 rounded-full'/></button>
+          </Tooltip>
+          <Tooltip title="New Signature">
+            <button onClick={handleReload}><TbReload className='bg-zinc-200/50 p-1 h-8 w-8 rounded-full'/></button>
           </Tooltip>
           <div className='flex bg-zinc-200/50 rounded-full'>
             <Tooltip title="Change canvas color">
@@ -184,6 +192,7 @@ function App() {
           onTouchStart={startDrawing}
           onTouchMove={draw}
           onTouchEnd={finishDrawing}
+          style={{ touchAction: 'none' }}
         >
           <canvas
             ref={canvasRef}
