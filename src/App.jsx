@@ -15,10 +15,10 @@ function App() {
   const canvasContainerRef = useRef(null);
   const isDrawing = useRef(false);
   const [backgroundColor, setBackgroundColor] = useState('transparent');
-  const [brushColor, setBrushColor] = useState('dark gray');
+  const [brushColor, setBrushColor] = useState('#0b0b0b');
   const [brushSize, setBrushSize] = useState(5);
-  const [height, setHeight] = useState(canvasRef.height);
-  const [width, setWidth] = useState(canvasRef.width);
+  const [height, setHeight] = useState();
+  const [width, setWidth] = useState();
   const [imageFormat, setImageFormat] = useState('jpg');
 
   useEffect(() => {
@@ -162,7 +162,7 @@ function App() {
               </button>
             </Tooltip>
             <select value={brushColor} onChange={handleBrushColorChange} className='bg-zinc-200/30 p-1 rounded-full'>
-              <option value={'dark gray'}>Black</option>
+              <option value={'#0b0b0b'}>Black</option>
               <option value={'green'}>Green</option>
               <option value={'red'}>Red</option>
               <option value={'blue'}>Blue</option>
