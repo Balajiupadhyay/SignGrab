@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { HiDownload } from "react-icons/hi";
 import { TbReload } from "react-icons/tb";
 import { FaSignature } from "react-icons/fa";
@@ -16,12 +16,10 @@ function App() {
   const isDrawing = useRef(false);
   const [backgroundColor, setBackgroundColor] = useState('transparent');
   const [brushColor, setBrushColor] = useState('black');
-  const [brushSize, setBrushSize] = useState(5); 
+  const [brushSize, setBrushSize] = useState(5);
   const [height, setHeight] = useState(canvasRef.height);
   const [width, setWidth] = useState(canvasRef.width);
   const [imageFormat, setImageFormat] = useState('jpg');
-
-  // console.log(height, width);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,10 +34,9 @@ function App() {
     context.fillRect(0, 0, canvas.width, canvas.height);
   }, [backgroundColor, brushSize, brushColor]);
 
-  
   const startDrawing = (event) => {
     isDrawing.current = true;
-    const { offsetX, offsetY } = event.nativeEvent;
+    const { offsetX, offsetY } = getEventCoordinates(event);
     const context = canvasRef.current.getContext('2d');
     context.beginPath();
     context.moveTo(offsetX, offsetY);
@@ -47,7 +44,7 @@ function App() {
 
   const draw = (event) => {
     if (!isDrawing.current) return;
-    const { offsetX, offsetY } = event.nativeEvent;
+    const { offsetX, offsetY } = getEventCoordinates(event);
     const context = canvasRef.current.getContext('2d');
     context.lineTo(offsetX, offsetY);
     context.stroke();
@@ -60,9 +57,9 @@ function App() {
   const handleDownload = () => {
     const canvas = canvasRef.current;
 
-  // Get the specified width and height from the input boxes
-    const specifiedWidthCm = parseFloat(width); 
-    const specifiedHeightCm = parseFloat(height); 
+    // Get the specified width and height from the input boxes
+    const specifiedWidthCm = parseFloat(width);
+    const specifiedHeightCm = parseFloat(height);
 
     // Convert cm to pixels (assuming 1cm = 37.8px)
     const specifiedWidthPx = specifiedWidthCm * 37.7952755906;
@@ -82,14 +79,15 @@ function App() {
     a.download = `signature_image.${imageFormat}`;
     a.click();
   };
-  
+
   const handleBackgroundColorChange = () => {
     setBackgroundColor(backgroundColor === 'transparent' ? 'white' : 'transparent');
   };
 
   const handleBrushColorChange = (event) => {
     setBrushColor(event.target.value);
-  }
+  };
+
   const handleReload = () => {
     window.location.reload();
   };
@@ -99,9 +97,18 @@ function App() {
     setBrushSize(newSize);
   };
 
-    const handleImageFormat = (event) => {
-      setImageFormat(event.target.value);
-  }
+  const handleImageFormat = (event) => {
+    setImageFormat(event.target.value);
+  };
+
+  const getEventCoordinates = (event) => {
+    const clientX = event.clientX || (event.touches && event.touches[0].clientX);
+    const clientY = event.clientY || (event.touches && event.touches[0].clientY);
+    const rect = canvasRef.current.getBoundingClientRect();
+    const offsetX = clientX - rect.left;
+    const offsetY = clientY - rect.top;
+    return { offsetX, offsetY };
+  };
 
   const date = new Date();
   const currentYear = date.getFullYear();
@@ -173,7 +180,7 @@ function App() {
                 <option value={'jpg'}>JPG</option>
                 <option value={'png'}>PNG</option>
                 {/* <option value={'pdf'}>PDF</option> */}
-              </select> 
+              </select>
           </div>
         </div>
         <div
@@ -182,6 +189,9 @@ function App() {
           onMouseDown={startDrawing}
           onMouseMove={draw}
           onMouseUp={finishDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={finishDrawing}
         >
           <canvas
             ref={canvasRef}
