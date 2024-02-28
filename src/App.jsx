@@ -184,7 +184,7 @@ function App() {
           </div>
         </div>
         <div
-          className='flex bg-zinc-800 w-[60%] h-[70%] rounded-2xl overflow-hidden'
+          className='flex bg-zinc-800 md:w-[85%] lg:w-[70%] sm:w-[95%] h-[70%]  sm:mx-10 rounded-2xl overflow-hidden'
           ref={canvasContainerRef}
           onMouseDown={startDrawing}
           onMouseMove={draw}
