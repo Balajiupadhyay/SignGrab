@@ -15,7 +15,7 @@ function App() {
   const canvasContainerRef = useRef(null);
   const isDrawing = useRef(false);
   const [backgroundColor, setBackgroundColor] = useState('transparent');
-  const [brushColor, setBrushColor] = useState('black');
+  const [brushColor, setBrushColor] = useState('dark gray');
   const [brushSize, setBrushSize] = useState(5);
   const [height, setHeight] = useState(canvasRef.height);
   const [width, setWidth] = useState(canvasRef.width);
@@ -58,8 +58,14 @@ function App() {
     const canvas = canvasRef.current;
 
     // Get the specified width and height from the input boxes
-    const specifiedWidthCm = parseFloat(width);
-    const specifiedHeightCm = parseFloat(height);
+    let specifiedWidthCm = parseFloat(width);
+    let specifiedHeightCm = parseFloat(height);
+
+    // If width or height is not provided, use canvas dimensions
+    if (isNaN(specifiedWidthCm) || isNaN(specifiedHeightCm)) {
+        specifiedWidthCm = canvas.width / 37.7952755906; // Convert pixels to cm
+        specifiedHeightCm = canvas.height / 37.7952755906; // Convert pixels to cm
+    }
 
     // Convert cm to pixels (assuming 1cm = 37.8px)
     const specifiedWidthPx = specifiedWidthCm * 37.7952755906;
@@ -78,7 +84,8 @@ function App() {
     a.href = dataUrl;
     a.download = `signature_image.${imageFormat}`;
     a.click();
-  };
+};
+
 
   const handleBackgroundColorChange = () => {
     setBackgroundColor(backgroundColor === 'transparent' ? 'white' : 'transparent');
@@ -155,7 +162,7 @@ function App() {
               </button>
             </Tooltip>
             <select value={brushColor} onChange={handleBrushColorChange} className='bg-zinc-200/30 p-1 rounded-full'>
-              <option value={'black'}>Black</option>
+              <option value={'dark gray'}>Black</option>
               <option value={'green'}>Green</option>
               <option value={'red'}>Red</option>
               <option value={'blue'}>Blue</option>
